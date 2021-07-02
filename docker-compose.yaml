@@ -1,0 +1,23 @@
+﻿version: "3.9"
+services:
+  leisure-center-bookings:
+    image: benwallacestock/leisure-center-auto-booking
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      ConnectionStrings:DefaultConnection: Server=db;Database=master;User=sa;Password=<DB_PASSWORD>;
+      LeisureCenter:Username: <LESUIRE_CENTER_USERNAME>
+      LeisureCenter:Password: <LEISURE_CENTER_PASSWORD>
+  db:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      SA_PASSWORD: <DB_PASSWORD>
+      ACCEPT_EULA: Y
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$$SA_PASSWORD" -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
