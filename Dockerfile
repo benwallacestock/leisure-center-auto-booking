@@ -13,4 +13,4 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet publish -c Release -o out
 
-ENTRYPOINT ["dotnet", "out/leisure-center-bookings.dll"]
+ENTRYPOINT ["dotnet", "out/leisure-center-auto-booking.dll"]
